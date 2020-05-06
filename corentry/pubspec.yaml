@@ -1,0 +1,66 @@
+name: corentry
+description: Boehringer Ingelheim Healthtracker
+version: 1.0.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+  flushbar: 1.9.1
+  firebase_core: ^0.4.0+8
+  cloud_firestore: ^0.12.9+5
+  firebase_auth: ^0.15.0
+  nested_navigators: ^1.0.7
+  version: ^1.0.3
+  flutter_secure_storage: ^3.3.2
+  package_info: ^0.4.0+16
+  barcode_scan: ^2.0.1
+  path_provider: ^1.6.1
+  open_file:
+  qr_flutter:
+    git:
+      url: git://github.com/lukef/qr.flutter.git
+      ref: 2.0.0-dev.1
+  #icons
+  flutter_launcher_icons: ^0.7.3
+  flutter_local_notifications: ^1.4.1
+
+  #IOS
+  flutter_platform_widgets: ^0.32.5
+
+dev_dependencies:
+  flutter_driver:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  e2e: ^0.2.4+2
+
+  #flutter pub run flutter_launcher_icons:main
+flutter_icons:
+  android: true
+  ios: true
+  image_path_android: "assets/images/logo.png"
+  image_path_ios: "assets/images/logo-ios.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/sounds/
+    - assets/icons/
+    - assets/locale/
+  fonts:
+    - family: Ubuntu
+      fonts:
+        - asset: assets/fonts/ubuntu/Ubuntu-Light.ttf
+          weight: 500
+        - asset: assets/fonts/ubuntu/Ubuntu-Regular.ttf
+          weight: 600
+        - asset: assets/fonts/ubuntu/Ubuntu-Medium.ttf
+          weight: 700
+
+environment:
+  sdk: ">=2.3.0 <3.0.0"
+  flutter: ">=1.12.13+hotfix.5"

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "162551266606",
+    "firebase_url": "https://corentry-cb0da.firebaseio.com",
+    "project_id": "corentry-cb0da",
+    "storage_bucket": "corentry-cb0da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162551266606:android:6a985cdb28c8931d368ebf",
+        "android_client_info": {
+          "package_name": "com.deseyve.corentry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162551266606-j6kl8utbv6b14gs7pra07dhe9q71j2mr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2rS0JkGgRjSUiqr7mkup8gwp3cEITW04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162551266606-j6kl8utbv6b14gs7pra07dhe9q71j2mr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
