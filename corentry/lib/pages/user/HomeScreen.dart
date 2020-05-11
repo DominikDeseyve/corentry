@@ -1,6 +1,5 @@
-import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:corentry/logic/Controller.dart';
+import 'package:corentry/models/Company.dart';
 import 'package:corentry/widgets/EventAvatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin {
+  List<Company> _companies = [];
+
   void initState() {
     super.initState();
     print("### INIT EXPLORE SCREEN");
+    Controller().companyBLOC.addListener(_updateData);
+    Controller().companyBLOC.fetchCompanies();
+  }
+
+  void _updateData() {
+    List<Company> companies = Controller().companyBLOC.companies;
+    setState(() {
+      this._companies = companies;
+    });
   }
 
   Widget build(BuildContext context) {
@@ -56,7 +66,8 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
           ],
         ),
       ),
-      body: new Center(
+      body: RefreshIndicator(
+        onRefresh: Controller().companyBLOC.fetchCompanies,
         child: ListView(
           scrollDirection: Axis.vertical,
           children: <Widget>[
@@ -75,13 +86,24 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(bottom: 2),
-                        child: Text(
-                          'Impuls',
-                          style: TextStyle(
-                            fontSize: 28,
-                            color: Controller().theming.secondary,
-                            letterSpacing: 1,
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              Icons.location_on,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              'Impuls',
+                              style: TextStyle(
+                                fontSize: 28,
+                                color: Controller().theming.secondary,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Text(
@@ -115,11 +137,11 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
             ListView.builder(
               physics: ScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 1,
+              itemCount: this._companies.length,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   children: <Widget>[
-                    EventFeedItem(),
+                    EventFeedItem(this._companies[index]),
                   ],
                 );
               },
@@ -131,6 +153,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   }
 
   void dispose() {
+    Controller().companyBLOC.removeListener(_updateData);
     super.dispose();
   }
 
@@ -138,7 +161,9 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
 }
 
 class EventFeedItem extends StatefulWidget {
-  EventFeedItem();
+  final Company _company;
+
+  EventFeedItem(this._company);
 
   _EventFeedItemState createState() => new _EventFeedItemState();
 }
@@ -176,7 +201,7 @@ class _EventFeedItemState extends State<EventFeedItem> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            'Impuls Gesundheitszentrum',
+                            this.widget._company.name,
                             style: TextStyle(color: Colors.white, fontSize: 18, letterSpacing: 1),
                           ),
                           Icon(
@@ -197,37 +222,41 @@ class _EventFeedItemState extends State<EventFeedItem> {
               ],
             ),
             //start info
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: Row(
+            (Controller().authentificator.user.companies.contains(this.widget._company.companyID)
+                ? Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 10, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Icon(Icons.group, size: 28, color: Controller().theming.primary),
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 4, 0, 0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                              child: Row(
                                 children: <Widget>[
-                                  Text(
-                                    '123',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(fontSize: 20, color: Controller().theming.primary),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    'aktuelle Besucher',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Controller().theming.primary,
+                                  Icon(Icons.group, size: 28, color: Controller().theming.primary),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(10, 4, 0, 0),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          this.widget._company.currentVisitors.toString(),
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(fontSize: 20, color: Controller().theming.primary),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        Text(
+                                          'aktuelle Besucher',
+                                          textAlign: TextAlign.left,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Controller().theming.primary,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -235,45 +264,43 @@ class _EventFeedItemState extends State<EventFeedItem> {
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Icon(Icons.directions_run, size: 26, color: Controller().theming.primary),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 4, 0, 0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
                               children: <Widget>[
-                                Text(
-                                  'Freitag',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(fontSize: 20, color: Controller().theming.primary),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Text(
-                                  'zuletzt besucht',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Controller().theming.primary,
+                                Icon(Icons.calendar_today, size: 26, color: Controller().theming.primary),
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10, 4, 0, 0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        this.widget._company.todaysVisitors.toString(),
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 20, color: Controller().theming.primary),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        'heutige Besucher',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Controller().theming.primary,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                : SizedBox.shrink()),
             Divider(),
           ],
         ),

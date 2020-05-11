@@ -36,7 +36,7 @@ class RegisterScreenState extends State<RegisterScreen> {
         child: ListView(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(40, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(40, 50, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -46,15 +46,6 @@ class RegisterScreenState extends State<RegisterScreen> {
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
                       color: Controller().theming.primary,
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(20, 25, 20, 20),
-                    child: Center(
-                      child: Image.asset(
-                        'assets/icon/logo.png',
-                        height: 100,
-                      ),
                     ),
                   ),
                 ],

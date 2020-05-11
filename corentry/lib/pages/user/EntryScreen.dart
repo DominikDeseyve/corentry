@@ -53,7 +53,7 @@ class _EntryScreenState extends State<EntryScreen> {
                             ),
                           ),
                           Text(
-                            'Manuell verlassen',
+                            'Impuls entfolgen',
                             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300, fontSize: 14),
                           ),
                         ],
@@ -247,35 +247,37 @@ class _EntryScreenState extends State<EntryScreen> {
           Container(
             margin: const EdgeInsets.fromLTRB(15, 5, 10, 10),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Icon(
-                      Icons.calendar_today,
-                      size: 26,
-                      color: Controller().theming.primary,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Text(
-                        ' dd. MMMM yyyy',
-                        style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
-                      ),
-                    ),
-                  ],
+                Icon(
+                  Icons.location_on,
+                  size: 26,
+                  color: Controller().theming.primary,
                 ),
-                Row(
-                  children: <Widget>[
-                    Icon(Icons.timer, size: 26, color: Controller().theming.primary),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 30, 0),
-                      child: Text(
-                        ' :mm Uhr',
-                        style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
-                      ),
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: Text(
+                    'Birkendorfer Straße 65',
+                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.fromLTRB(15, 5, 10, 10),
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.location_city,
+                  size: 26,
+                  color: Controller().theming.primary,
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: Text(
+                    '88400 Biberach an der Riß',
+                    style: TextStyle(fontWeight: FontWeight.w300, fontSize: 15),
+                  ),
                 ),
               ],
             ),

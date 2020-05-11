@@ -23,13 +23,12 @@ class _PanelScreenState extends State<PanelScreen> {
             backgroundColor: Controller().theming.secondary,
             leading: Icon(
               Icons.notifications_active,
-              color: Controller().theming.primary,
+              color: Controller().theming.fontPrimary,
               size: 26,
             ),
             title: Text(
               'Impuls Gesundheitszentrum',
               style: TextStyle(
-                fontFamily: 'Lato light',
                 color: Controller().theming.primary,
                 fontSize: 20,
               ),
@@ -67,10 +66,45 @@ class _PanelScreenState extends State<PanelScreen> {
               ],
             ),
             actions: <Widget>[
-              IconButton(
-                color: Controller().theming.primary,
-                icon: Icon(Icons.settings, size: 26),
-                onPressed: () {},
+              PopupMenuButton(
+                padding: const EdgeInsets.all(0),
+                elevation: 0,
+                color: Controller().theming.background,
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Controller().theming.primary,
+                ),
+                onSelected: (int pValue) async {
+                  switch (pValue) {
+                    case 0:
+                      await Controller().authentificator.signOut();
+                      Navigator.of(context).pushReplacementNamed('/');
+                      break;
+                    case 1:
+                      await Navigator.of(context, rootNavigator: true).pushNamed('/settings');
+                      break;
+                  }
+                },
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 0,
+                    child: Text(
+                      'Abmelden',
+                      style: TextStyle(
+                        color: Controller().theming.primary,
+                      ),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: 1,
+                    child: Text(
+                      'Einstellungen',
+                      style: TextStyle(
+                        color: Controller().theming.primary,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

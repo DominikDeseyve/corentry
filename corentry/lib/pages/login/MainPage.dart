@@ -1,6 +1,6 @@
-import 'package:corentry/pages/WelcomeScreen.dart';
 import 'package:corentry/pages/login/LoginScreen.dart';
 import 'package:corentry/pages/login/RegisterScreen.dart';
+import 'package:corentry/pages/login/WelcomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 

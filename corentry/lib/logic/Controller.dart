@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:corentry/bloc/ActivitiesBLOC.dart';
+import 'package:corentry/bloc/CompanyBLOC.dart';
 import 'package:corentry/logic/Authentificator.dart';
 import 'package:corentry/logic/Firestore.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +19,9 @@ class Controller {
   Authentificator _authentificator;
   Firebase _firebase;
 
+  CompanyBLOC _companyBLOC;
+  ActivitiesBLOC _activitiesBLOC;
+
   static final Controller _controller = Controller._internal();
 
   factory Controller() {
@@ -30,7 +35,10 @@ class Controller {
     this._authentificator = Authentificator(this);
 
     this._theming = Theming();
-    this._firebase = Firebase();
+    this._firebase = Firebase(this);
+
+    this._companyBLOC = CompanyBLOC(this);
+    this._activitiesBLOC = ActivitiesBLOC(this);
   }
 
   //***************************************************//
@@ -42,4 +50,8 @@ class Controller {
   Authentificator get authentificator => this._authentificator;
 
   Firebase get firebase => this._firebase;
+
+  CompanyBLOC get companyBLOC => this._companyBLOC;
+
+  ActivitiesBLOC get activitiesBLOC => this._activitiesBLOC;
 }

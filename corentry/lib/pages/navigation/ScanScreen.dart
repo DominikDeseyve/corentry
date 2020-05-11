@@ -11,33 +11,28 @@ class ScanScreen extends StatefulWidget {
 class _ScanScreenState extends State<ScanScreen> {
   void initState() {
     super.initState();
-    print("### INIT EXPLORE SCREEN");
+
     this.scan();
   }
 
   Future scan() async {
     String qrCode;
-    bool error = false;
     try {
-      qrCode = await BarcodeScanner.scan();
-      Controller().theming.showSnackbar(context, qrCode);
+      //qrCode = await BarcodeScanner.scan();
+      qrCode = '123';
+      //Controller().theming.showSnackbar(context, qrCode);
       print(qrCode);
+      Controller().firebase.runScan(qrCode, Controller().authentificator.user.userID);
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         qrCode = 'The user did not grant the camera permission!';
       } else {
         qrCode = 'Unknown error: $e';
       }
-      error = true;
-    } on FormatException {
-      error = false;
-      //error = true;
-      //barcode = 'null (User returned using the "back"-button before scanning anything. Result)';
-    } catch (e) {
-      error = true;
+    } on FormatException {} catch (e) {
       qrCode = 'Unknown error: $e';
     }
-    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
   }
 
   Widget build(BuildContext context) {

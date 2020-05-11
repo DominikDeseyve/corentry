@@ -83,16 +83,17 @@ class Authentificator {
   Future<void> delete() async {
     await this._firebaseUser.delete();
   }
-/*
+
   Future<bool> authentificate() async {
     FirebaseUser user = await this.firebaseAuth.currentUser();
     if (user != null) {
       this._firebaseUser = user;
-      this._mainController.currentUser = await this._mainController.api.getUserData(user.uid);
-
+      await this._initSignIn();
       return true;
     } else {
       return false;
     }
-  }*/
+  }
+
+  User get user => this._user;
 }

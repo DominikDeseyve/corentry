@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:corentry/logic/Controller.dart';
 import 'package:corentry/widgets/EventAvatar.dart';
 import 'package:flutter/material.dart';

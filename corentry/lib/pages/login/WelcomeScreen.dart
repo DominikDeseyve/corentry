@@ -17,7 +17,7 @@ class WelcomeScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: Controller().theming.primary,
               image: DecorationImage(
-                colorFilter: new ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.dstATop),
+                colorFilter: new ColorFilter.mode(Colors.white.withOpacity(0.6), BlendMode.dstATop),
                 image: AssetImage('assets/images/background.jpg'),
                 fit: BoxFit.cover,
               ),
@@ -25,12 +25,11 @@ class WelcomeScreen extends StatelessWidget {
             child: ListView(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(top: 200.0),
+                  padding: EdgeInsets.fromLTRB(20, 130, 20, 10),
                   child: Center(
-                    child: Icon(
-                      Icons.event_note,
-                      color: Colors.white,
-                      size: 60.0,
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      height: 120,
                     ),
                   ),
                 ),
@@ -40,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "EVENTIGER",
+                        "CorEntry",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 40,
@@ -53,14 +52,14 @@ class WelcomeScreen extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                   child: Center(
                     child: Text(
-                      "manage your events",
+                      "Trace Your Visitor",
                       style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ),
                 new Container(
                   width: MediaQuery.of(context).size.width,
-                  margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 110.0),
+                  margin: const EdgeInsets.only(left: 30.0, right: 30.0, top: 90),
                   alignment: Alignment.center,
                   child: new Row(
                     children: <Widget>[

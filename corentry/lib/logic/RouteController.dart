@@ -1,10 +1,12 @@
-import 'package:corentry/pages/ActivtyScreen.dart';
-import 'package:corentry/pages/WelcomeScreen.dart';
-import 'package:corentry/pages/home/EntryScreen.dart';
-import 'package:corentry/pages/home/HomeScreen.dart';
+import 'package:corentry/logic/Controller.dart';
+import 'package:corentry/pages/SettingsScreen.dart';
 import 'package:corentry/pages/login/MainPage.dart';
 import 'package:corentry/pages/navigation/Menu.dart';
 import 'package:corentry/pages/navigation/ScanScreen.dart';
+import 'package:corentry/pages/user/ActivtyScreen.dart';
+import 'package:corentry/pages/user/EntryScreen.dart';
+import 'package:corentry/pages/user/HomeScreen.dart';
+import 'package:corentry/widgets/HugeLoader.dart';
 import 'package:flutter/material.dart';
 
 class RouteController {
@@ -23,7 +25,31 @@ class RouteController {
       //*********   LOGIN
       //***************************************************//
       case '/':
-        return MainPage();
+        Widget page = FutureBuilder<bool>(
+          future: Controller().authentificator.authentificate(),
+          builder: (BuildContext context, AsyncSnapshot<bool> isAuth) {
+            switch (isAuth.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.active:
+              case ConnectionState.done:
+                if (isAuth.data != null) {
+                  if (isAuth.data) {
+                    return Menu();
+                  } else {
+                    return MainPage();
+                  }
+                }
+
+                return MainPage();
+                break;
+              default:
+                break;
+            }
+            return HugeLoader.show();
+          },
+        );
+        return page;
+
         break;
       case '/root':
         return Menu();
@@ -39,6 +65,12 @@ class RouteController {
         break;
       case '/entry':
         return EntryScreen();
+        break;
+      case '/settings':
+        return SettingsScreen();
+        break;
+      default:
+        return _errorRoute();
         break;
     }
   }
